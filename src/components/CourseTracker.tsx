@@ -435,7 +435,7 @@ const CourseTracker = () => {
             GraduPlanner
           </h1>
           <p className="text-gray-600">
-            {data.curso.nome} ({data.curso.campus} / {data.curso.instituicao})
+            {data.curso.nome} - {data.curso.campus}/{data.curso.instituicao}
           </p>
           <p className="text-sm text-gray-500 mt-1">
             Semestre atual: {graduation.currentSemester}
