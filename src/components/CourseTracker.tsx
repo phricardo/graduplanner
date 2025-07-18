@@ -288,50 +288,43 @@ const CourseTracker = () => {
     };
   };
 
-  const estimateGraduation = () => {
-    const progress = calculateProgress();
-    const currentSemester = getCurrentSemester();
-    const [currentYear, currentSemesterNumber] = currentSemester
-      .split(".")
-      .map(Number);
 
-    // Disciplinas restantes (excluindo as já planejadas para este ano)
-    const remainingSubjects =
-      progress.total - progress.completed - progress.current - progress.planned;
+const estimateGraduation = () => {
+  const progress = calculateProgress();
+  const currentSemester = getCurrentSemester();
+  const [currentYear, currentSemesterNumber] = currentSemester
+    .split(".")
+    .map(Number);
 
-    // Considerar disciplinas planejadas para este ano
-    let semestersFromPlanned = 0;
-    if (progress.planned > 0) {
-      // Se há disciplinas planejadas, elas serão cursadas ainda este ano
-      const remainingSemestersThisYear = currentSemesterNumber === 1 ? 1 : 0; // Se estamos no .1, ainda temos o .2
-      semestersFromPlanned = remainingSemestersThisYear > 0 ? 0 : 1; // Se não há mais semestres este ano, adiciona 1
+  const remainingSubjects =
+    progress.total - progress.completed - progress.current - progress.planned;
+
+  const subjectsPerSemester = 6; // Considerando 6 disciplinas por semestre
+  const remainingSemesters = Math.ceil(remainingSubjects / subjectsPerSemester);
+
+  // Calcular ano de formatura
+  let graduationYear = currentYear;
+  let graduationSemester = currentSemesterNumber;
+
+  // Adicionar os semestres restantes
+  for (let i = 0; i < remainingSemesters; i++) {
+    graduationSemester++;
+    if (graduationSemester > 2) {
+      graduationSemester = 1;
+      graduationYear++;
     }
+  }
 
-    const subjectsPerSemester = 6; // Considerando 6 disciplinas por semestre
-    const remainingSemesters =
-      Math.ceil(remainingSubjects / subjectsPerSemester) + semestersFromPlanned;
-
-    // Calcular ano de formatura
-    let graduationYear = currentYear;
-    let graduationSemester = currentSemesterNumber;
-
-    // Adicionar os semestres restantes
-    for (let i = 0; i < remainingSemesters; i++) {
-      graduationSemester++;
-      if (graduationSemester > 2) {
-        graduationSemester = 1;
-        graduationYear++;
-      }
-    }
-
-    return {
-      remainingSubjects,
-      remainingSemesters,
-      graduationYear,
-      graduationSemester: `${graduationYear}.${graduationSemester}`,
-      currentSemester,
-    };
+  return {
+    remainingSubjects,
+    remainingSemesters,
+    graduationYear,
+    graduationSemester: `${graduationYear}.${graduationSemester}`,
+    currentSemester,
   };
+};
+
+  
 
   const getRecommendations = () => {
     const availableSubjects: Subject[] = [];
