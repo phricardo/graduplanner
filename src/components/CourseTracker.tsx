@@ -13,7 +13,7 @@ import {
   CheckCheck,
   Target,
 } from "lucide-react";
-import { data } from "@/data/courseData";
+import { data } from "@/data/data";
 import { useToast } from "@/hooks/use-toast";
 import {
   AlertDialog,
@@ -288,43 +288,42 @@ const CourseTracker = () => {
     };
   };
 
+  const estimateGraduation = () => {
+    const progress = calculateProgress();
+    const currentSemester = getCurrentSemester();
+    const [currentYear, currentSemesterNumber] = currentSemester
+      .split(".")
+      .map(Number);
 
-const estimateGraduation = () => {
-  const progress = calculateProgress();
-  const currentSemester = getCurrentSemester();
-  const [currentYear, currentSemesterNumber] = currentSemester
-    .split(".")
-    .map(Number);
+    const remainingSubjects =
+      progress.total - progress.completed - progress.current - progress.planned;
 
-  const remainingSubjects =
-    progress.total - progress.completed - progress.current - progress.planned;
+    const subjectsPerSemester = 6; // Considerando 6 disciplinas por semestre
+    const remainingSemesters = Math.ceil(
+      remainingSubjects / subjectsPerSemester
+    );
 
-  const subjectsPerSemester = 6; // Considerando 6 disciplinas por semestre
-  const remainingSemesters = Math.ceil(remainingSubjects / subjectsPerSemester);
+    // Calcular ano de formatura
+    let graduationYear = currentYear;
+    let graduationSemester = currentSemesterNumber;
 
-  // Calcular ano de formatura
-  let graduationYear = currentYear;
-  let graduationSemester = currentSemesterNumber;
-
-  // Adicionar os semestres restantes
-  for (let i = 0; i < remainingSemesters; i++) {
-    graduationSemester++;
-    if (graduationSemester > 2) {
-      graduationSemester = 1;
-      graduationYear++;
+    // Adicionar os semestres restantes
+    for (let i = 0; i < remainingSemesters; i++) {
+      graduationSemester++;
+      if (graduationSemester > 2) {
+        graduationSemester = 1;
+        graduationYear++;
+      }
     }
-  }
 
-  return {
-    remainingSubjects,
-    remainingSemesters,
-    graduationYear,
-    graduationSemester: `${graduationYear}.${graduationSemester}`,
-    currentSemester,
+    return {
+      remainingSubjects,
+      remainingSemesters,
+      graduationYear,
+      graduationSemester: `${graduationYear}.${graduationSemester}`,
+      currentSemester,
+    };
   };
-};
-
-  
 
   const getRecommendations = () => {
     const availableSubjects: Subject[] = [];
