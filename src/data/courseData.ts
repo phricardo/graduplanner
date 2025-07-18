@@ -1,6 +1,7 @@
 interface Data {
   curso: {
     nome: string;
+    instituicao: string;
     campus: string;
     nivel: string;
     grau: string;
@@ -21,6 +22,7 @@ interface Data {
 export const data: Data = {
   curso: {
     nome: "Sistemas de Informação",
+    instituicao: "CEFET/RJ",
     campus: "Nova Friburgo",
     nivel: "Graduação",
     grau: "Bacharelado",
