@@ -113,7 +113,7 @@ export const data: Data = {
         { nome: "Programação para Web", prerequisitos: ["Fundamentos da Web"] },
         {
           nome: "Administração de Redes",
-          prerequisitos: ["Fundamentos de Redes"],
+          prerequisitos: ["Fundamentos de Redes", "Sistemas Operacionais"],
         },
         { nome: "Probabilidade e Estatística" },
         { nome: "Gestão do Conhecimento da Informação" },
