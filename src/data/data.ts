@@ -68,6 +68,10 @@ const periodos: ICourseData["periodos"] = [
         prerequisitos: ["Programação Orientada a Objetos", "Banco de Dados 1"],
       },
       {
+        nome: "Sistemas Operacionais",
+        prerequisitos: [],
+      },
+      {
         nome: "Algoritmos e Est. de Dados",
         prerequisitos: ["Arquitetura de Computadores", "Fundamentos de Redes"],
       },
